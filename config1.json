@@ -1,0 +1,85 @@
+{
+  "app": {
+    "name": "MiniWorkflowApp",
+    "version": "1.0.0",
+    "env": "dev"
+  },
+  "server": {
+    "host": "127.0.0.1",
+    "port": 8080,
+    "logLevel": "info"
+  },
+  "features": {
+    "enableCache": true,
+    "enableMetrics": false,
+    "experimental": ["beta-ui", "fast-mode"]
+  },
+  "workflow": {
+    "steps": [
+      {
+        "type": "print",
+        "message": "Запуск сценарію..."
+      },
+      {
+        "type": "set",
+        "var": "a",
+        "value": 10
+      },
+      {
+        "type": "set",
+        "var": "b",
+        "value": 5
+      },
+      {
+        "type": "calc",
+        "operation": "add",
+        "args": ["$a", "$b"],
+        "result": "sum"
+      },
+      {
+        "type": "print",
+        "message": "Сума = {sum}"
+      },
+      {
+        "type": "calc",
+        "operation": "mul",
+        "args": ["$sum", 2],
+        "result": "doubleSum"
+      },
+      {
+        "type": "if",
+        "condition": {
+          "left": "$doubleSum",
+          "op": ">",
+          "right": 20
+        },
+        "then": [
+          {
+            "type": "print",
+            "message": "Подвоєна сума більша за 20"
+          }
+        ],
+        "else": [
+          {
+            "type": "print",
+            "message": "Подвоєна сума не більша за 20"
+          }
+        ]
+      },
+      {
+        "type": "calc",
+        "operation": "sub",
+        "args": ["$doubleSum", 3],
+        "result": "finalResult"
+      },
+      {
+        "type": "print",
+        "message": "Фінальний результат = {finalResult}"
+      },
+      {
+        "type": "summary",
+        "vars": ["a", "b", "sum", "doubleSum", "finalResult"]
+      }
+    ]
+  }
+}

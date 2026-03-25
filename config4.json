@@ -1,0 +1,65 @@
+{
+  "app": {
+    "name": "DSLInterpreter",
+    "version": "1.0.0",
+    "env": "dev"
+  },
+  "server": {
+    "host": "127.0.0.1",
+    "port": 8080,
+    "logLevel": "info"
+  },
+  "features": {
+    "enableCache": true,
+    "enableMetrics": false,
+    "experimental": []
+  },
+  "workflow": {
+    "steps": [
+      {
+        "type": "print",
+        "message": "Назва застосунку: ${app.name}, середовище: ${app.env}"
+      },
+      {
+        "type": "set",
+        "var": "requests",
+        "value": 120
+      },
+      {
+        "type": "set",
+        "var": "costPerRequest",
+        "value": 10
+      },
+      {
+        "type": "multiply",
+        "var": "totalCost",
+        "a": "${requests}",
+        "b": "${costPerRequest}"
+      },
+      {
+        "type": "if",
+        "condition": {
+          "left": "${totalCost}",
+          "op": ">",
+          "right": 1000
+        },
+        "then": [
+          {
+            "type": "print",
+            "message": "warning: загальна вартість перевищує 1000. totalCost = ${totalCost}"
+          }
+        ],
+        "else": [
+          {
+            "type": "print",
+            "message": "info: загальна вартість не перевищує 1000. totalCost = ${totalCost}"
+          }
+        ]
+      },
+      {
+        "type": "summary",
+        "fields": ["requests", "costPerRequest", "totalCost"]
+      }
+    ]
+  }
+}

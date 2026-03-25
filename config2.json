@@ -1,0 +1,75 @@
+{
+  "app": {
+    "name": "DSLApp",
+    "version": "1.0.0",
+    "env": "dev"
+  },
+  "server": {
+    "host": "127.0.0.1",
+    "port": 8080,
+    "logLevel": "info"
+  },
+  "features": {
+    "enableCache": true,
+    "enableMetrics": false,
+    "experimental": ["beta-ui"]
+  },
+  "workflow": {
+    "steps": [
+      {
+        "type": "print",
+        "message": "Початок виконання сценарію"
+      },
+      {
+        "type": "set",
+        "var": "a",
+        "value": 10
+      },
+      {
+        "type": "set",
+        "var": "b",
+        "value": 5
+      },
+      {
+        "type": "add",
+        "var": "sum",
+        "a": "${a}",
+        "b": "${b}"
+      },
+      {
+        "type": "print",
+        "message": "Сума чисел: ${sum}"
+      },
+      {
+        "type": "multiply",
+        "var": "result",
+        "a": "${sum}",
+        "b": 2
+      },
+      {
+        "type": "if",
+        "condition": {
+          "left": "${result}",
+          "op": ">",
+          "right": 20
+        },
+        "then": [
+          {
+            "type": "print",
+            "message": "Результат більший за 20"
+          }
+        ],
+        "else": [
+          {
+            "type": "print",
+            "message": "Результат не більший за 20"
+          }
+        ]
+      },
+      {
+        "type": "summary",
+        "fields": ["a", "b", "sum", "result"]
+      }
+    ]
+  }
+}
